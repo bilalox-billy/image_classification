@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "image-classification"
+version = "0.1.0"
+description = "Image classification project using PyTorch"
+authors = ["Bilal Ben Mahria <bilal.benmahria.up@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">= 3.11, <4.0"
+requests = "^2.31.0"
+pathlib = "^1.0.1"
+tqdm = "^4.66.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api" 
