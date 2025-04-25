@@ -4,24 +4,67 @@
 import os
 import torch
 import multiprocessing
-
+import argparse
 import data_setup, engine, model_builder, utils
 
 from torchvision import transforms
+
+# Create a parser 
+parser = argparse.ArgumentParser(description= "Get some hyperparameters.")
 
 # Set multiprocessing start method to 'spawn' for Windows compatibility
 if __name__ == '__main__':
     multiprocessing.set_start_method('spawn', force=True)
 
+    parser.add_argument("--num-epochs",
+                        default =10,
+                        type=int,
+                        help="The number of epochs to train for.")
+    
+    parser.add_argument("--batch_size",
+                        default=32,
+                        type=int,
+                        help="The number of batches to train for.")
+
+    parser.add_argument("--hidden_units",
+                        default=10,
+                        type=int,
+                        help="The number of hidden units in the model.")
+
+    parser.add_argument("--learning_rate",
+                        default=0.001,
+                        type=float,
+                        help="The learning rate to use for the optimizer.")
+    
+    # Create an arg for training directory
+    parser.add_argument("--train_dir",
+                        default="data/pizza_steak_sushi/train",
+                        type=str,
+                        help="The training directory.")
+
+    # Create an arg for testing directory
+    parser.add_argument("--test_dir",
+                        default="data/pizza_steak_sushi/test",
+                        type=str,
+                        help="The testing directory.")
+    
+    # Get our arguments from the parser
+    args = parser.parse_args()
+
     # Setup hyperparameters
-    NUM_EPOCHS = 5
-    BATCH_SIZE = 32
-    HIDDEN_UNITS = 10
-    LEARNING_RATE = 0.001
+    NUM_EPOCHS = args.num_epochs
+    BATCH_SIZE = args.batch_size
+    HIDDEN_UNITS = args.hidden_units
+    LEARNING_RATE = args.learning_rate
+    
 
     # Setup directories
-    train_dir = "data/pizza_steak_sushi/train"
-    test_dir = "data/pizza_steak_sushi/test"
+    train_dir = args.train_dir
+    test_dir = args.test_dir
+    
+    print(f"[INFO] Training data file: {train_dir}")
+    print(f"[INFO] Testing data file: {test_dir}")
+    
 
     # Setup target device and display GPU information
     print("\n=== GPU Information ===")
